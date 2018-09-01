@@ -6,3 +6,4 @@ frontend-nanodegree-arcade-game
 2.Use keyboard keys - right, left, up, down to play the game and collect the gem.
 
 Dependencies used are -HTML 5 CANVAS , CSS, JAVASCRIPT
+ https://shruti49.github.io/Frogger-game/
