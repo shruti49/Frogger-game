@@ -76,6 +76,7 @@ class Player {
                 this.b = this.b - 80;
                 if (this.b < -80) {
                     this.b = 380;
+                    this.a = 400;
                     gem1.c = 430;
                     gem1.d = 110;
                     toggleModal();
