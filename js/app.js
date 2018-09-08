@@ -1,3 +1,6 @@
+const music = document.getElementById("music");
+
+
 // Enemies our player must avoid
 var Enemy = function (x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -14,27 +17,32 @@ var Enemy = function (x, y, speed) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function (dt) {
-    this.x += this.speed * dt;
-
-    if (player.b < -80) {
-        this.x = 1000;
-    }
-
-    if (this.x > 500) {
-        this.x = -20;
-    }
 
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt;
+    if (this.x > 500) {
+        this.x = -20;
+    }
+
+    //Collsion between the player and enemy
     if (player.a < this.x + 80 &&
         player.a + 80 > this.x &&
         player.b < this.y + 60 &&
         60 + player.b > this.y) {
+
+        //resetting the player's position after collision
         player.a = 200;
         player.b = 380;
     }
 
+
+    //After popup appears the player and the bugs are not visible 
+    //Position changed
+    if (player.b === 700) {
+        this.x = 500;
+    }
 
 };
 
@@ -82,8 +90,9 @@ class Player {
                 this.b = this.b - 80;
                 if (this.b < -80) {
                     this.b = 700;
-                    toggleModal();
 
+                    //Modal opens
+                    toggleModal();
                 }
                 break;
 
@@ -101,9 +110,10 @@ class Player {
 }
 
 // Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 const player = new Player(200, 380);
+
+// Place all enemy objects in an array called allEnemies
 const allEnemies = [];
 
 let yposition = [60, 140, 220];
@@ -150,7 +160,7 @@ class Gem {
 }
 
 // Randomize the gem location 
-const gem1 = new Gem(Math.floor(Math.random() * 200) + 1, Math.floor(Math.random() * 200) + 1);
+const gem1 = new Gem(Math.floor(Math.random() * 400), Math.floor(Math.random() * 200));
 
 
 var modal = document.querySelector(".modal");
@@ -158,11 +168,9 @@ var closeButton = document.querySelector(".close-button");
 
 function toggleModal() {
     modal.classList.toggle("show-modal");
-
+music.src = "";
     // for removing keyup listener 
     document.removeEventListener('keyup', eventListener_cb)
-
-
 }
 
 
@@ -170,11 +178,18 @@ closeButton.addEventListener("click", e => {
 
     // Re-adding event listener on closing the popup modal 
     document.addEventListener('keyup', eventListener_cb);
+
+    //Resetting player's position
     player.a = 200;
     player.b = 380;
-    gem1.c = (Math.floor(Math.random() * 200) + 1);
-    gem1.d = (Math.floor(Math.random() * 200) + 1);
 
+    //Resetting gem's position
+    gem1.c = (Math.floor(Math.random() * 400));
+    gem1.d = (Math.floor(Math.random() * 200));
+
+   music.src = "https://www.youtube.com/embed/eKmRkS1os7k?rel=0&autoplay=1"; 
     // Hiding/showing the modal
     modal.classList.toggle("show-modal");
 });
+
+ 

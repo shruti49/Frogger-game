@@ -2,6 +2,9 @@ body {
     text-align: center;
 }
 
+#music{
+	display: none;
+}
 	.modal {
 	    position: fixed;
 	    left: 0;
