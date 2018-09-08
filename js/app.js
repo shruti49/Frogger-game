@@ -16,6 +16,10 @@ var Enemy = function (x, y, speed) {
 Enemy.prototype.update = function (dt) {
     this.x += this.speed * dt;
 
+    if (player.b < -80) {
+        this.x = 1000;
+    }
+
     if (this.x > 500) {
         this.x = -20;
     }
@@ -30,6 +34,8 @@ Enemy.prototype.update = function (dt) {
         player.a = 200;
         player.b = 380;
     }
+
+
 };
 
 
@@ -75,12 +81,9 @@ class Player {
             case "up":
                 this.b = this.b - 80;
                 if (this.b < -80) {
-                    this.b = 380;
-                    this.a = 400;
-                    gem1.c = 430;
-                    gem1.d = 110;
+                    this.b = 700;
                     toggleModal();
-                    
+
                 }
                 break;
 
@@ -103,7 +106,7 @@ class Player {
 const player = new Player(200, 380);
 const allEnemies = [];
 
-const yposition = [60, 140, 220];
+let yposition = [60, 140, 220];
 
 yposition.forEach(ypos => {
     const enemy = new Enemy(0, ypos, 20 + Math.floor(Math.random() * 200));
@@ -113,7 +116,9 @@ yposition.forEach(ypos => {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function (e) {
+
+// Assigning cb to a named function 
+let eventListener_cb = function (e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -122,11 +127,12 @@ document.addEventListener('keyup', function (e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-});
+}
+document.addEventListener('keyup', eventListener_cb);
 
 
 //Additional Functionality
-class Gems {
+class Gem {
     constructor(c, d) {
         this.c = c;
         this.d = d;
@@ -134,7 +140,6 @@ class Gems {
     }
     update() {
         if (player.a < this.c + 80 && player.a + 80 > this.c && player.b < this.d + 60 && 60 + player.b > this.d) {
-
             this.c = -50;
             this.d = -50;
         }
@@ -144,16 +149,32 @@ class Gems {
     }
 }
 
-const gem1 = new Gems(430, 110);
-
- var modal = document.querySelector(".modal");
- var closeButton = document.querySelector(".close-button");
-
- function toggleModal() {
-     modal.classList.toggle("show-modal");
- }
+// Randomize the gem location 
+const gem1 = new Gem(Math.floor(Math.random() * 200) + 1, Math.floor(Math.random() * 200) + 1);
 
 
+var modal = document.querySelector(".modal");
+var closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+
+    // for removing keyup listener 
+    document.removeEventListener('keyup', eventListener_cb)
 
 
- closeButton.addEventListener("click", toggleModal);
+}
+
+
+closeButton.addEventListener("click", e => {
+
+    // Re-adding event listener on closing the popup modal 
+    document.addEventListener('keyup', eventListener_cb);
+    player.a = 200;
+    player.b = 380;
+    gem1.c = (Math.floor(Math.random() * 200) + 1);
+    gem1.d = (Math.floor(Math.random() * 200) + 1);
+
+    // Hiding/showing the modal
+    modal.classList.toggle("show-modal");
+});
