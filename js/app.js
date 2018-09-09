@@ -88,11 +88,16 @@ class Player {
 
             case "up":
                 this.b = this.b - 80;
-                if (this.b < -80) {
-                    this.b = 700;
-
-                    //Modal opens
-                    toggleModal();
+                console.log(this.b);
+                if (this.b === -20) {
+                    if (gem1.c === -50 && gem1.d === -50) {
+                        this.b = 700;
+                        toggleModal();
+                    } else {
+                        alert("Ooops! you left the gem");
+                        this.b = 60;
+                    }
+                   //Modal opens
                 }
                 break;
 
@@ -160,15 +165,16 @@ class Gem {
 }
 
 // Randomize the gem location 
-const gem1 = new Gem(Math.floor(Math.random() * 400), Math.floor(Math.random() * 200));
-
+const gem1 = new Gem((Math.floor(Math.random() * 109)),(Math.floor(Math.random() * 200)));
+console.log(gem1.c);
+console.log(gem1.d);
 
 var modal = document.querySelector(".modal");
 var closeButton = document.querySelector(".close-button");
 
 function toggleModal() {
     modal.classList.toggle("show-modal");
-music.src = "";
+    music.src = "";
     // for removing keyup listener 
     document.removeEventListener('keyup', eventListener_cb)
 }
@@ -184,12 +190,10 @@ closeButton.addEventListener("click", e => {
     player.b = 380;
 
     //Resetting gem's position
-    gem1.c = (Math.floor(Math.random() * 400));
+    gem1.c = (Math.floor(Math.random() * 200));
     gem1.d = (Math.floor(Math.random() * 200));
 
-   music.src = "https://www.youtube.com/embed/eKmRkS1os7k?rel=0&autoplay=1"; 
+    music.src = "https://www.youtube.com/embed/eKmRkS1os7k?rel=0&autoplay=1";
     // Hiding/showing the modal
     modal.classList.toggle("show-modal");
 });
-
- 
