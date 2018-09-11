@@ -94,7 +94,7 @@ class Player {
                         this.b = 700;
                         toggleModal();
                     } else {
-                        alert("Ooops! you left the gem");
+                        swal("Oops!!" , "you left the gem..", "warning");
                         this.b = 60;
                     }
                    //Modal opens
@@ -165,7 +165,7 @@ class Gem {
 }
 
 // Randomize the gem location 
-const gem1 = new Gem((Math.floor(Math.random() * 109)),(Math.floor(Math.random() * 200)));
+const gem1 = new Gem((Math.floor(Math.random() * 400)),(Math.floor(Math.random() * 201)+100));
 console.log(gem1.c);
 console.log(gem1.d);
 
@@ -190,8 +190,8 @@ closeButton.addEventListener("click", e => {
     player.b = 380;
 
     //Resetting gem's position
-    gem1.c = (Math.floor(Math.random() * 200));
-    gem1.d = (Math.floor(Math.random() * 200));
+    gem1.c = (Math.floor(Math.random() * 400));
+    gem1.d = (Math.floor(Math.random() * 201) + 100);
 
     music.src = "https://www.youtube.com/embed/eKmRkS1os7k?rel=0&autoplay=1";
     // Hiding/showing the modal
