@@ -88,7 +88,6 @@ class Player {
 
             case "up":
                 this.b = this.b - 80;
-                console.log(this.b);
                 if (this.b === -20) {
                     if (gem1.c === -50 && gem1.d === -50) {
                         this.b = 700;
@@ -166,8 +165,6 @@ class Gem {
 
 // Randomize the gem location 
 const gem1 = new Gem((Math.floor(Math.random() * 400)),(Math.floor(Math.random() * 201)+100));
-console.log(gem1.c);
-console.log(gem1.d);
 
 var modal = document.querySelector(".modal");
 var closeButton = document.querySelector(".close-button");
