@@ -193,7 +193,7 @@ closeButton.addEventListener("click", e => {
     gem1.c = (Math.floor(Math.random() * 400));
     gem1.d = (Math.floor(Math.random() * 201) + 100);
 
-    music.src = "https://www.youtube.com/embed/eKmRkS1os7k?rel=0&autoplay=1";
+    music.src = "/audio/Cricket Sound Effect.mp3";
     // Hiding/showing the modal
     modal.classList.toggle("show-modal");
 });
