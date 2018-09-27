@@ -94,6 +94,14 @@ class Player {
                         toggleModal();
                     } else {
                         swal("Oops!!" , "you left the gem..", "warning");
+
+                        //stop music on 'out of game'
+                        document.querySelector('audio').pause();
+
+                        //Restarting the game when game resumes
+                        document.addEventListener('click', e =>{
+                            document.querySelector('audio').play();
+                        })
                         this.b = 60;
                     }
                    //Modal opens
@@ -173,7 +181,10 @@ function toggleModal() {
     modal.classList.toggle("show-modal");
     music.src = "";
     // for removing keyup listener 
-    document.removeEventListener('keyup', eventListener_cb)
+    document.removeEventListener('keyup', eventListener_cb);
+
+    //For stopping the music on pause or game-over
+    document.querySelector('audio').pause();
 }
 
 
