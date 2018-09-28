@@ -1,61 +1,50 @@
+'use strict';
+
 const music = document.getElementById("music");
 
-
 // Enemies our player must avoid
-var Enemy = function (x, y, speed) {
+const Enemy = function (x, y, speed) {
     // Variables applied to each of our instances go here,
     this.x = x;
     this.y = y;
     this.speed = speed;
 
-    // we've provided one for you to get started
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // we've provided one for you to get started The image/sprite for our enemies,
+    // this uses a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+// Update the enemy's position, required method for game Parameter: dt, a time
+// delta between ticks
 Enemy.prototype.update = function (dt) {
 
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    // You should multiply any movement by the dt parameter which will ensure the
+    // game runs at the same speed for all computers.
     this.x += this.speed * dt;
     if (this.x > 500) {
         this.x = -20;
     }
 
     //Collsion between the player and enemy
-    if (player.a < this.x + 80 &&
-        player.a + 80 > this.x &&
-        player.b < this.y + 60 &&
-        60 + player.b > this.y) {
+    if (player.a < this.x + 80 && player.a + 80 > this.x && player.b < this.y + 60 && 60 + player.b > this.y) {
 
         //resetting the player's position after collision
-        player.a = 200;
-        player.b = 380;
+        player.reset();
     }
 
-
-    //After popup appears the player and the bugs are not visible 
-    //Position changed
+    //After popup appears the player and the bugs are not visible Position changed
     if (player.b === 700) {
         this.x = 500;
     }
 
 };
 
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
-
-// Now write your own player class
-// This class requires an update(), render() and
+// Now write your own player class This class requires an update(), render() and
 // a handleInput() method.
 class Player {
     constructor(a, b) {
@@ -64,9 +53,7 @@ class Player {
         this.sprite = 'images/char-boy.png';
     }
 
-    update() {
-
-    }
+    update() {}
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.a, this.b);
     }
@@ -93,18 +80,22 @@ class Player {
                         this.b = 700;
                         toggleModal();
                     } else {
-                        swal("Oops!!" , "you left the gem..", "warning");
+                        swal("Oops!!", "you left the gem..", "warning");
 
                         //stop music on 'out of game'
-                        document.querySelector('audio').pause();
+                        document
+                            .querySelector('audio')
+                            .pause();
 
                         //Restarting the game when game resumes
-                        document.addEventListener('click', e =>{
-                            document.querySelector('audio').play();
+                        document.addEventListener('click', e => {
+                            document
+                                .querySelector('audio')
+                                .play();
                         })
                         this.b = 60;
                     }
-                   //Modal opens
+                    //Modal opens
                 }
                 break;
 
@@ -119,10 +110,16 @@ class Player {
                 break;
         }
     }
+
+    reset() {
+        //Resetting player's position
+        player.a = 200;
+        player.b = 380;
+    }
 }
 
-// Now instantiate your objects.
-// Place the player object in a variable called player
+// Now instantiate your objects. Place the player object in a variable called
+// player
 const player = new Player(200, 380);
 
 // Place all enemy objects in an array called allEnemies
@@ -135,13 +132,10 @@ yposition.forEach(ypos => {
     allEnemies.push(enemy);
 });
 
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-
-// Assigning cb to a named function 
+// This listens for key presses and sends the keys to your Player.handleInput()
+// method. You don't need to modify this. Assigning cb to a named function
 let eventListener_cb = function (e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
@@ -151,7 +145,6 @@ let eventListener_cb = function (e) {
     player.handleInput(allowedKeys[e.keyCode]);
 }
 document.addEventListener('keyup', eventListener_cb);
-
 
 //Additional Functionality
 class Gem {
@@ -171,31 +164,36 @@ class Gem {
     }
 }
 
-// Randomize the gem location 
-const gem1 = new Gem((Math.floor(Math.random() * 400)),(Math.floor(Math.random() * 201)+100));
+// Randomize the gem location
+const gem1 = new Gem(
+    (Math.floor(Math.random() * 400)),
+    (Math.floor(Math.random() * 201) + 100)
+);
 
-var modal = document.querySelector(".modal");
-var closeButton = document.querySelector(".close-button");
+const modal = document.querySelector(".modal");
+const closeButton = document.querySelector(".close-button");
 
 function toggleModal() {
-    modal.classList.toggle("show-modal");
+    modal
+        .classList
+        .toggle("show-modal");
     music.src = "";
-    // for removing keyup listener 
+    // for removing keyup listener
     document.removeEventListener('keyup', eventListener_cb);
 
     //For stopping the music on pause or game-over
-    document.querySelector('audio').pause();
+    document
+        .querySelector('audio')
+        .pause();
 }
-
 
 closeButton.addEventListener("click", e => {
 
-    // Re-adding event listener on closing the popup modal 
+    // Re-adding event listener on closing the popup modal
     document.addEventListener('keyup', eventListener_cb);
 
     //Resetting player's position
-    player.a = 200;
-    player.b = 380;
+    player.reset();
 
     //Resetting gem's position
     gem1.c = (Math.floor(Math.random() * 400));
@@ -203,5 +201,7 @@ closeButton.addEventListener("click", e => {
 
     music.src = "./audio/sound.mp3";
     // Hiding/showing the modal
-    modal.classList.toggle("show-modal");
+    modal
+        .classList
+        .toggle("show-modal");
 });
